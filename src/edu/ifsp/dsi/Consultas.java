@@ -1,9 +1,9 @@
 package edu.ifsp.dsi;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Scanner;
 
 public class Consultas {
@@ -18,12 +18,15 @@ public class Consultas {
 			System.out.println("Preço máximo: ");
 			double precoMaximo = sc.nextInt();
 
+			String query = "SELECT id, descricao, preco "
+					+ "FROM produtos WHERE preco < ?;";
+			
 			while (precoMaximo > 0) {
-				try (Statement stmt = conn.createStatement();) {
-	
-					ResultSet rs = stmt.executeQuery(
-							"SELECT id, descricao, preco "
-							+ "FROM produtos WHERE preco < " + precoMaximo + ";");
+				try (PreparedStatement ps = conn.prepareStatement(query)) {
+
+					ps.setDouble(1, precoMaximo);
+					ResultSet rs = ps.executeQuery();
+					
 					
 					while (rs.next()) {
 						long id = rs.getLong("id"); 
