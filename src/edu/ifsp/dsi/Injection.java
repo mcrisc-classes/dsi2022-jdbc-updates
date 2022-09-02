@@ -1,9 +1,9 @@
 package edu.ifsp.dsi;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Scanner;
 
 public class Injection {
@@ -19,11 +19,13 @@ public class Injection {
 
 			String query = "SELECT id, descricao, preco "
 					+ "FROM produtos WHERE "
-					+ "descricao LIKE '" + desc + "%';";
+					+ "descricao LIKE ?;";
 			
-			try (Statement stmt = conn.createStatement();) {
+			try (PreparedStatement ps = conn.prepareStatement(query);) {
 
-				ResultSet rs = stmt.executeQuery(query);
+				ps.setString(1, desc + "%");
+				
+				ResultSet rs = ps.executeQuery();
 				
 				
 				while (rs.next()) {
