@@ -8,7 +8,7 @@ public class ConnectionProvider {
 	/* As constantes a seguir são parâmetros da 
 	 * conexão. Altere-as conforme a necessidade. */
 	private static final String HOST = "localhost";
-	private static final String DB_NAME = "world";
+	private static final String DB_NAME = "loja";
 	private static final String USER = "root";
 	private static final String PASSWORD = "root";
 

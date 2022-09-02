@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class ConexaoBD {
+public class Consultas {
 	public static void main(String[] args) {
 		
 		try (Connection conn = ConnectionProvider.getConnection()) {
@@ -13,16 +13,16 @@ public class ConexaoBD {
 			try (Statement stmt = conn.createStatement();) {
 
 				ResultSet rs = stmt.executeQuery(
-						"SELECT code, name, indepyear FROM country "
-						+ "WHERE indepyear > 1990;");
+						"SELECT id, descricao, preco "
+						+ "FROM produtos WHERE preco < 3000;");
 				
 				while (rs.next()) {
-					String code = rs.getString("code");
-					String name = rs.getString("name");
-					int indepYear = rs.getInt("indepyear");
+					long id = rs.getLong("id"); 
+					String descricao = rs.getString("descricao");
+					double preco = rs.getDouble("preco");
 					
-					System.out.printf("%s\t%s\t%d\n", 
-							code, name, indepYear);
+					System.out.printf("%d\t%s\t%.2f\n", 
+							id, descricao, preco);
 				}
 			}
 			
